@@ -21,6 +21,7 @@ producto1 = Product(
     stock=10,
     created_at=datetime.now(),
 )
+
 producto2 = Product(
     id=102,
     name="Mouse Logitech",
@@ -29,12 +30,20 @@ producto2 = Product(
     created_at=datetime.now(),
 )
 
+producto3 = Product(
+    id=103,
+    name="Teclado Mecánico",
+    price=89.99,
+    stock=25,
+    created_at=datetime.now()
+)
+
 # 3. Crear un pedido con el cliente y los productos
 pedido = Order(
     id=1001,
     customer=cliente,
-    products=[producto1, producto2],
-    total=1526.49,
+    products=[producto1, producto2, producto3],
+    total=producto1.price + producto2.price + producto3.price,
     created_at=datetime.now(),
 )
 
@@ -55,3 +64,7 @@ print("=== EXPERIMENTO ===")
 print(f"¿Cuántos productos tiene el pedido? {len(pedido.products)}")
 print(f"Primer producto: {pedido.products[0].name}")
 print(f"Segundo producto: {pedido.products[1].name}")
+
+print()
+print("=== TOTAL ===")
+print(f"Total: {pedido.total}")
