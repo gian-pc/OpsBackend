@@ -1,9 +1,10 @@
 from typing import List, Optional
 
 from src.domain.product import Product
+from src.interfaces.i_product_repository import IProductRepository
 
 
-class ProductRepository:
+class ProductRepository(IProductRepository):
     def __init__(self):
         self.products: List[Product] = []
         self._next_id: int = 1

@@ -2,18 +2,36 @@ from datetime import datetime
 
 from src.domain.customer import Customer
 from src.domain.product import Product
+
+from src.interfaces.i_customer_repository import ICustomerRepository
+from src.interfaces.i_order_repository import IOrderRepository
+from src.interfaces.i_product_repository import IProductRepository
+
 from src.repositories.customer_repository import CustomerRepository
 from src.repositories.order_repository import OrderRepository
 from src.repositories.product_repository import ProductRepository
+
 from src.services.order_service import OrderService
 
 
 class App:
 
-    def __init__(self):
-        self.customer_repo = CustomerRepository()
-        self.product_repo = ProductRepository()
-        self.order_repo = OrderRepository()
+    # Acoplamiento FUERTE
+    # def __init__(self):
+    #     self.customer_repo = CustomerRepository()
+    #     self.product_repo = ProductRepository()
+    #     self.order_repo = OrderRepository()
+
+    # Acoplamiento DÉBIL
+    def __init__(
+            self,
+            customer_repo: ICustomerRepository,
+            product_repo: IProductRepository,
+            order_repo: IOrderRepository
+    ):
+        self.customer_repo = customer_repo
+        self.product_repo = product_repo
+        self.order_repo = order_repo
 
     def run(self):
         print("=== SISTEMA DE GESTION DE PEDIDOS ===\n")
@@ -132,5 +150,14 @@ class App:
             print(f"\n✗ Error: {e}")
 
 if __name__ == "__main__":
-    app = App()
+    # app = App()
+    # app.run()
+
+    # Crear las implementaciones concretas
+    customer_repo = CustomerRepository()
+    product_repo = ProductRepository()
+    order_repo = OrderRepository()
+
+    # Inyectar dependencias
+    app = App(customer_repo, product_repo, order_repo)
     app.run()

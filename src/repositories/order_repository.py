@@ -1,8 +1,10 @@
 
 from typing import List, Optional
 from src.domain.order import Order
+from src.interfaces.i_order_repository import IOrderRepository
 
-class OrderRepository:
+
+class OrderRepository(IOrderRepository):
 
     def __init__(self):
         self.orders: List[Order] = []

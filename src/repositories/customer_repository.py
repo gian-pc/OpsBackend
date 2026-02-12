@@ -1,9 +1,10 @@
 from typing import List, Optional
 
 from src.domain.customer import Customer
+from src.interfaces.i_customer_repository import ICustomerRepository
 
 
-class CustomerRepository:
+class CustomerRepository(ICustomerRepository):
 
     def __init__(self):
         self._customers: List[Customer] = []
