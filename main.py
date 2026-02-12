@@ -10,6 +10,7 @@ from src.interfaces.i_product_repository import IProductRepository
 from src.repositories.customer_repository import CustomerRepository
 from src.repositories.order_repository import OrderRepository
 from src.repositories.product_repository import ProductRepository
+from src.services.customer_service import CustomerService
 
 from src.services.order_service import OrderService
 
@@ -46,7 +47,8 @@ class App:
             print("2. Ver todos los productos")
             print("3. Ver todos los pedidos")
             print("4. Crear pedido")
-            print("5. Salir")
+            print("5. Eliminar cliente")
+            print("6. Salir")
 
             opcion = input("\nSelecciona una opción: ")
 
@@ -59,6 +61,8 @@ class App:
             elif opcion == "4":
                 self._crear_pedido()
             elif opcion == "5":
+                self._eliminar_cliente()
+            elif opcion == "6":
                 print("¡Hasta luego!")
                 break
             else:
@@ -148,6 +152,22 @@ class App:
             print(f"Total: ${pedido.total}")
         except ValueError as e:
             print(f"\n✗ Error: {e}")
+
+    def _eliminar_cliente(self):
+        print("\n=== ELIMINAR CLIENTE ===")
+
+        print("\nClientes disponibles:")
+        self._mostrar_clientes()
+        customer_id = int(input("\nID del cliente: "))
+
+        try:
+            CustomerService.delete_customer(customer_id, self.customer_repo, self.order_repo)  # ← ¿Qué parámetros van?
+            print("✓ Cliente eliminado exitosamente")
+        except ValueError as e:
+            print(f"✗ Error: {e}")
+
+
+
 
 if __name__ == "__main__":
     # app = App()

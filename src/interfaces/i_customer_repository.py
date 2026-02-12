@@ -20,3 +20,7 @@ class ICustomerRepository(ABC):
     @abstractmethod
     def find_all(self) -> List[Customer]:
         pass
+
+    @abstractmethod
+    def delete(self, customer_id: int) -> bool:
+        pass

@@ -31,3 +31,11 @@ class CustomerRepository(ICustomerRepository):
 
     def find_all(self) -> List[Customer]:
         return self._customers.copy()
+
+    def delete(self, customer_id: int) -> bool:
+        for customer in self._customers:
+            if customer.id == customer_id:
+                self._customers.remove(customer)
+                return True
+        return False
+
