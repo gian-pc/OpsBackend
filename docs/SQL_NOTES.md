@@ -55,3 +55,30 @@ FROM products;
 
 SELECT COUNT(*) AS total FROM products;
 ```
+
+## Día 9: JOINs
+
+### INNER JOIN - Solo registros con coincidencia
+```sql
+SELECT orders.id, customers.name, orders.total
+FROM orders
+INNER JOIN customers ON orders.customer_id = customers.id;
+```
+
+### LEFT JOIN - Todos los registros de la tabla izquierda
+```sql
+SELECT customers.name, orders.id, orders.total
+FROM customers
+LEFT JOIN orders ON customers.id = orders.customer_id;
+```
+
+### JOIN + GROUP BY - Estadísticas por grupo
+```sql
+SELECT 
+    customers.name AS cliente,
+    COUNT(orders.id) AS total_pedidos,
+    SUM(orders.total) AS monto_total
+FROM customers
+LEFT JOIN orders ON customers.id = orders.customer_id
+GROUP BY customers.id, customers.name;
+```
