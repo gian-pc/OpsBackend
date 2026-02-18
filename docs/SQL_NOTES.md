@@ -82,3 +82,37 @@ FROM customers
 LEFT JOIN orders ON customers.id = orders.customer_id
 GROUP BY customers.id, customers.name;
 ```
+
+## Día 10: HAVING y Subqueries
+
+### HAVING - Filtrar grupos
+```sql
+-- Clientes con más de 1 pedido
+SELECT customers.name, COUNT(orders.id) AS total_pedidos
+FROM customers
+INNER JOIN orders ON customers.id = orders.customer_id
+GROUP BY customers.id
+HAVING COUNT(orders.id) > 1;
+```
+
+### Subquery en HAVING
+```sql
+-- Clientes que gastaron más que el promedio
+SELECT customers.name, SUM(orders.total) AS monto_total
+FROM customers
+INNER JOIN orders ON customers.id = orders.customer_id
+GROUP BY customers.id
+HAVING SUM(orders.total) > (SELECT AVG(total) FROM orders);
+```
+
+### Subquery en SELECT
+```sql
+-- Comparar con promedio
+SELECT 
+    customers.name,
+    SUM(orders.total) AS monto,
+    (SELECT AVG(total) FROM orders) AS promedio
+FROM customers
+INNER JOIN orders ON customers.id = orders.customer_id
+GROUP BY customers.id;
+```
